@@ -1,6 +1,6 @@
 // ==ClosureCompiler==
 // @compilation_level ADVANCED_OPTIMIZATIONS
-// @externs_url http://closure-compiler.googlecode.com/svn/trunk/contrib/externs/maps/google_maps_api_v3_3.js
+// @externs_url https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/maps/google_maps_api_v3_3.js
 // ==/ClosureCompiler==
 
 /**
@@ -1059,6 +1059,26 @@ ClusterIcon.prototype.triggerClusterClick = function(event) {
 
 
 /**
+ * Triggers the clustermouseover event.
+ *
+ * @param {google.maps.MouseEvent} event The event to propagate
+ */
+ClusterIcon.prototype.triggerClusterMouseOver = function(event) {
+  google.maps.event.trigger(this.cluster_.getMarkerClusterer(), 'clustermouseover', this.cluster_, event);
+}
+
+
+/**
+ * Triggers the clustermouseout event.
+ *
+ * @param {google.maps.MouseEvent} event The event to propagate
+ */
+ClusterIcon.prototype.triggerClusterMouseOut = function(event) {
+  google.maps.event.trigger(this.cluster_.getMarkerClusterer(), 'clustermouseout', this.cluster_, event);
+}
+
+
+/**
  * Adding the cluster icon to the dom.
  * @ignore
  */
@@ -1076,6 +1096,12 @@ ClusterIcon.prototype.onAdd = function() {
   var that = this;
   google.maps.event.addDomListener(this.div_, 'click', function(event) {
     that.triggerClusterClick(event);
+  });
+  google.maps.event.addDomListener(this.div_, 'mouseover', function(event) {
+    that.triggerClusterMouseOver(event);
+  });
+  google.maps.event.addDomListener(this.div_, 'mouseout', function(event) {
+    that.triggerClusterMouseOut(event);
   });
 };
 
